@@ -1,0 +1,1 @@
+# Quick fabric8-based Continuous Delivery app installer
