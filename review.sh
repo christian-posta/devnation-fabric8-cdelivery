@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# Usage: ./review.sh <project_director> <repo_name>
+# where <project_directory> is the location of a freshly checked out project from gogs
+# ideally, we'd automate the project import into gerrit, but this works fine for now
+
 PROJ_DIR=$1
 
 cd $PROJ_DIR

@@ -14,9 +14,6 @@
   <properties>
     <fabric8.version>2.2.0</fabric8.version>
 
-    <!-- these really should be in sync, but hacking around an issue ATM-->
-    <fabric8.maven.plugin.version>2.1.11</fabric8.maven.plugin.version>
-
     <recreate>false</recreate>
     <domain>${env.KUBERNETES_DOMAIN}</domain>
 
@@ -31,6 +28,7 @@
     <fabric8.domain>${domain}</fabric8.domain>
 
     <fabric8.apply.DOMAIN>${domain}</fabric8.apply.DOMAIN>
+    <fabric8.serviceAccount>fabric8</fabric8.serviceAccount>
     <fabric8.apply.GOGS_SERVER_DOMAIN>gogs.${domain}</fabric8.apply.GOGS_SERVER_DOMAIN>
     <fabric8.apply.GOGS_SERVER_DOMAIN>gogs.${domain}</fabric8.apply.GOGS_SERVER_DOMAIN>
   </properties>
@@ -42,8 +40,7 @@
       <plugin>
         <groupId>io.fabric8</groupId>
         <artifactId>fabric8-maven-plugin</artifactId>
-        <!--<version>${fabric8.version}</version>-->
-        <version>${fabric8.maven.plugin.version}</version>
+        <version>${fabric8.version}</version>
         <executions>
           <execution>
             <id>json</id>
