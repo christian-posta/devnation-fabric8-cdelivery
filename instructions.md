@@ -26,7 +26,7 @@ while optional for the others
 ```
 vagrant ssh
 ```
-* Next run these instrustions to create directories 
+* Next run these instructions to create directories 
 ```
 sudo mkdir -p /home/gerrit/site
 sudo mkdir -p /home/gerrit/admin-ssh-key/
@@ -44,13 +44,11 @@ Pass as parameter the location of the vagrant private key
 cd /Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabri8-cdelivery
 ./copy-keys-vagrant.sh /Users/chmoulli/Fuse/projects/fabric8/fabric8-installer/vagrant/openshift-latest/.vagrant/machines/default/virtualbox/private_key
 ```
-
-    
-    
     
     
 # Delete the Fabric8 App
 
+```
 oc delete rc -l provider=fabric8
 oc delete pods -l provider=fabric8
 oc delete svc -l provider=fabric8
@@ -65,16 +63,19 @@ oc get rc sonarqube
 oc get svc sonarqube
 oc get oauthclients | grep fabric8
 oc get oauthclients | grep gogs
+```
 
 # Delete the containers & images
 
+```
 docker rm $(docker ps -a | grep fabric8)
 docker rmi $(docker images | grep fabric8)
-
+```
 Remark : If location of vagrant changes, update also the IDENTITY env var to get the private_key of vagrant within the script
 
 # Gerrit
 
+```
 git clone http://admin@gerrit.vagrant.local/demo2
 cd demo2
 git review -s
@@ -83,6 +84,7 @@ git checkout -b mycoolfeature
 git add README.md
 git commit -m "Commit : 1" -a
 git review
+```
 
 # Jenkins
 
