@@ -9,7 +9,7 @@ oc delete route jenkins
 oc delete route gogs-ssh
 oc delete route gogs
 oc delete route gerrit-ssh
-oc delete route gerrit-http
+oc delete route gerrit
 oc delete route fabric8-forge
 oc delete route elasticsearch
 oc delete route fabric8
