@@ -1,4 +1,4 @@
 #!/bin/sh
 
 . ./deleteroutes.sh
-mvn fabric8:create-routes
+mvn io.fabric8:fabric8-maven-plugin:2.2.0:create-routes
