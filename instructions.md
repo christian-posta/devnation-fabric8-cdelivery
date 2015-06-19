@@ -1,6 +1,28 @@
-# Commands to be issued within Vagrant machine
+# Demo scenario
 
-* First ssh to vagrant machine
+Here is the description/presentation of the steps to be followed in order to setup the environment and run the demo
+
+# Clone fabric8-installer
+
+Clone the Fabric8-installer project and move to the vagrant/openshift-latest directory
+
+```
+git clone https://github.com/fabric8io/fabric8-installer
+cd fabric8-installer/vagrant/openshift-latest
+```
+
+# Create the Vagrant VM machine
+
+```
+vagrant up
+```
+
+# Import SSH Keys
+
+In order to use gerrit, we have to import the ssh-keys of the admin and jenkins/gogs/sonar users. The private/public keys of the admin user are mandatory
+while optional for the others
+
+* First ssh to the vagrant machine
 ```
 vagrant ssh
 ```
@@ -12,14 +34,20 @@ sudo chown -R vagrant /home/gerrit/
 mkdir -p /home/gerrit/ssh-keys/
 sudo chown -R vagrant /home/gerrit/ssh-keys/
 ```    
+* You can exit from the vagrant machine
+
 # Copy ssh keys
 
 Pass as parameter the location of the vagrant private key
 
 ```
-cd /Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabric8-cdelivery
+cd /Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabri8-cdelivery
 ./copy-keys-vagrant.sh /Users/chmoulli/Fuse/projects/fabric8/fabric8-installer/vagrant/openshift-latest/.vagrant/machines/default/virtualbox/private_key
 ```
+
+    
+    
+    
     
 # Delete the Fabric8 App
 
@@ -101,7 +129,7 @@ http --auth-type digest -a admin:secret DELETE http://gerrit.vagrant.local/a/pro
 
 docker exec -it $(docker ps | grep 'gerrit:latest' | cut -f1 -d" ") bash
 
-# Regenaret a new json file of gerrit kube app
+# Regenerate a new json file of gerrit kube app
 
 mvn fabric8:json -Dfabric8.envproperties=something.properties
 
@@ -145,54 +173,9 @@ mvn clean fabric8:json compile
 mvn fabric8:apply -Dfabric8.recreate=true -Dfabric8.domain=vagrant.local
 
 
+# Gerrit maven plugin to be used to create a gerrit repo
 
-
-root@gerrit-controller-wqzdo:/home/gerrit# more  ~/.ssh/config               
-echo  Host gogs-ssh \
-      User git \
-      StrictHostKeyChecking no \
-      UserKnownHostsFile /dev/null >> ~/Temp/test.txt
-
-cat <<EOT >> ~/.ssh/config
-Host gogs-ssh 
-     User git 
-     StrictHostKeyChecking no 
-     UserKnownHostsFile /dev/null
-EOT      
-
-ssh-keyscan -t rsa gogs-ssh.default.svc.cluster.local >> ~/.ssh/known_hosts  
-
-
-[remote "git-server"]
-   # url = http://root:redhat01@gogs.default.svc.cluster.local:80/root/${name}.git
-   url = git@gogs-ssh.default.svc.cluster.local:root/${name}.git
-   adminUrl = ssh://git@gogs-ssh.default.svc.cluster.local/home/git/gogs-repositories/root/${name}.git
-   createMissingRepositories = true
-   autoReload = true
-
-
-   # url = http://chm:chmchm@localhost:3000/chm/${name}.git
-   url = chmoulli@localhost:chm/${name}.git
-
-   # url = git@gogs-ssh.default.svc.cluster.local:root/${name}.git
-   # adminUrl = ssh://git@gogs-ssh.default.svc.cluster.local/home/git/gogs-repositories/root/${name}.git
-   createMissingRepositories = true
-   autoReload = true
-
-
-cat <<EOT >> ~/.ssh/config
-Host localhost 
-     User chmoulli 
-     StrictHostKeyChecking no 
-     UserKnownHostsFile /dev/null
-EOT
-
-ssh -i /Users/chmoulli/Fuse/Fuse-projects/fabric8/docker-gerrit/ssh-keys/admin/id_rsa -p 29418 admin@192.168.59.103 gerrit create-project --name fabric8/demo.git
-
-
-
-
-mvn io.fabric8:fabric8-maven-plugin:2.2-SNAPSHOT:create-gitrepo -Drepo="demo" -DgerritAdminUsername="admin" -DgerritAdminPassword="secret"
+mvn io.fabric8:fabric8-maven-plugin:2.3-SNAPSHOT:create-gitrepo -Drepo="demo" -DgerritAdminUsername="admin" -DgerritAdminPassword="secret" -Dempty_commit="false"
 
 # Git Review
 
