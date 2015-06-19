@@ -1,21 +1,25 @@
-# Cmds to be issued within Vagrant machine
+# Commands to be issued within Vagrant machine
 
 * First ssh to vagrant machine
-
-    vagrant ssh
-
+```
+vagrant ssh
+```
 * Next run these instrustions to create directories 
+```
+sudo mkdir -p /home/gerrit/site
+sudo mkdir -p /home/gerrit/admin-ssh-key/
+sudo chown -R vagrant /home/gerrit/
+mkdir -p /home/gerrit/ssh-keys/
+sudo chown -R vagrant /home/gerrit/ssh-keys/
+```    
+# Copy ssh keys
 
-    sudo mkdir -p /home/gerrit/site
-    sudo mkdir -p /home/gerrit/admin-ssh-key/
-    sudo chown -R vagrant /home/gerrit/
-    mkdir -p /home/gerrit/ssh-keys/
-    sudo chown -R vagrant /home/gerrit/ssh-keys/
-    
-# Copy keys
+Pass as parameter the location of the vagrant private key
 
+```
 cd /Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabric8-cdelivery
 ./copy-keys-vagrant.sh /Users/chmoulli/Fuse/projects/fabric8/fabric8-installer/vagrant/openshift-latest/.vagrant/machines/default/virtualbox/private_key
+```
     
 # Delete the Fabric8 App
 
