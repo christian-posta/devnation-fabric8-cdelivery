@@ -77,17 +77,80 @@ mvn clean install -Papps -DskipTests=true
 ./scripts/set_kubenertes_env.sh
 ```
 
+# Deploy the CDelivery Kube applications on OS
 
-# Deploy the CDElivery Kube applications on OS
-
-
-
-# Deploy 
  
 ```
-mvn clean install -Pcdelievry
+vn clean install -Pcdelievry
 ```
 
+* Control that the Fabric8 Pods & Services have been created
+```
+oc get pods
+oc get services
+
+oc get svc
+NAME              LABELS                                     SELECTOR                                   IP(S)            PORT(S)
+docker-registry   docker-registry=default                    docker-registry=default                    172.30.136.53    5000/TCP
+elasticsearch     component=elasticsearch,provider=fabric8   component=elasticsearch,provider=fabric8   172.30.124.123   9200/TCP
+fabric8           component=console,provider=fabric8         component=console,provider=fabric8         172.30.235.97    80/TCP
+fabric8-forge     component=fabric8Forge,provider=fabric8    component=fabric8Forge,provider=fabric8    172.30.236.9     80/TCP
+gogs              component=gogs,provider=fabric8            component=gogs,provider=fabric8            172.30.73.26     80/TCP
+gogs-ssh          component=gogs,provider=fabric8            component=gogs,provider=fabric8            172.30.215.233   22/TCP
+jenkins           component=jenkins,provider=fabric8         component=jenkins,provider=fabric8         172.30.1.117     80/TCP
+kibana            component=kibana,provider=fabric8          component=kibana,provider=fabric8          172.30.25.211    80/TCP
+kubernetes        component=apiserver,provider=kubernetes    <none>                                     172.30.0.2       443/TCP
+kubernetes-ro     component=apiserver,provider=kubernetes    <none>                                     172.30.0.1       80/TCP
+nexus             component=nexus,provider=fabric8           component=nexus,provider=fabric8           172.30.67.68     80/TCP
+router            router=router                              router=router                              172.30.165.182   80/TCP
+
+oc get pods
+NAME                      READY     REASON    RESTARTS   AGE
+docker-registry-1-rr459   1/1       Running   0          44m
+elasticsearch-mb3fv       2/2       Running   0          22m
+fabric8-0upsk             1/1       Running   0          22m
+fabric8-forge-2ma9j       1/1       Running   0          22m
+gerrit-ctobk              1/1       Running   0          22m
+gogs-148m9                1/1       Running   0          22m
+jenkins-29e5i             1/1       Running   0          22m
+kibana-zfgyf              1/1       Running   0          22m
+nexus-1fsnz               1/1       Running   0          22m
+router-1-9us2r            1/1       Running   0          44m
+```
+
+* As it seems that the routes are not created by default, we have to recreate them
+  So run ths script and check that the routes are created
+    
+```
+./scripts/rebuildroutes.sh
+
+oc get routes
+NAME                    HOST/PORT                       PATH      SERVICE           LABELS
+docker-registry         docker-registry.vagrant.local             docker-registry   
+docker-registry-route   docker-registry.vagrant.local             docker-registry 
+  
+elasticsearch           elasticsearch.vagrant.local               elasticsearch    
+ 
+fabric8                 fabric8.vagrant.local                     fabric8           
+fabric8-forge           fabric8-forge.vagrant.local               fabric8-forge     
+gogs                    gogs.vagrant.local                        gogs              
+gogs-ssh                gogs-ssh.vagrant.local                    gogs-ssh          
+jenkins                 jenkins.vagrant.local                     jenkins           
+kibana                  kibana.vagrant.local                      kibana            
+nexus                   nexus.vagrant.local                       nexus             
+router                  router.vagrant.local                      router 
+```    
+
+* We can verify now that nexus, gerrit, gogs & jenkins servers are running.
+  So open a web browser with these addresses
+  
+```
+chrome fabric8.vagrant.local 
+chrome gogs.vagrant.local 
+chrome jenkins.vagrant.local
+chrome nexus.vagrant.local
+chrome 
+```  
     
     
 # Delete the Fabric8 App
@@ -96,15 +159,11 @@ mvn clean install -Pcdelievry
 oc delete rc -l provider=fabric8
 oc delete pods -l provider=fabric8
 oc delete svc -l provider=fabric8
-oc delete svc sonarqube
-oc delete rc sonarqube
 oc delete oauthclients fabric8
 oc delete oauthclients gogs
 
 oc get pods -l provider=fabric8
 oc get rc -l provider=fabric8
-oc get rc sonarqube
-oc get svc sonarqube
 oc get oauthclients | grep fabric8
 oc get oauthclients | grep gogs
 ```
