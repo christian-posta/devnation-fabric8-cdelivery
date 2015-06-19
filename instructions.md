@@ -2,12 +2,29 @@
 
 Here is the description/presentation of the steps to be followed in order to setup the environment and run the demo
 
+* Verify that the  `/etc/hosts` file contains a mapping btween the IP address of the VM and these hostnames
+
+```
+172.28.128.4	fabric8.local gogs.local vagrant.local docker-registry.vagrant.local fabric8-master.vagrant.local fabric8.vagrant.local gogs.vagrant.local jenkins.vagrant.local kibana.vagrant.local nexus.vagrant.local router.vagrant.local gerrit-ssh.vagrant.local gerrit.vagrant.local gerrit.vagrant.local gerrit-http.vagrant.local sonarqube.vagrant.local letschat.vagrant.local orion.vagrant.local taiga.vagrant.local quickstart-camelservlet.vagrant.local quickstart-rest.vagrant.local
+```
+
+* Add the routes used by the macos x machine to access the Pods/Docker containers
+
+```
+sudo route -n delete 172.0.0.0/8
+sudo route -n add 172.0.0.0/8  172.28.128.4
+```
+
+* Install the Openshift Client on your MacosX machine 
+
 # Clone fabric8-installer
 
-Clone the Fabric8-installer project and move to the vagrant/openshift-latest directory
+Clone the Fabric8-installer project and move to the vagrant/openshift-latest directory. Checkout this id
+as the latest commit (19/06/2015) is not working anymore 
 
 ```
 git clone https://github.com/fabric8io/fabric8-installer
+git checkout 09d2005
 cd fabric8-installer/vagrant/openshift-latest
 ```
 
@@ -41,9 +58,36 @@ sudo chown -R vagrant /home/gerrit/ssh-keys/
 Pass as parameter the location of the vagrant private key
 
 ```
-cd /Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabri8-cdelivery
-./copy-keys-vagrant.sh /Users/chmoulli/Fuse/projects/fabric8/fabric8-installer/vagrant/openshift-latest/.vagrant/machines/default/virtualbox/private_key
+cd /Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabric8-cdelivery
+./scripts/copy-keys-vagrant.sh /Users/chmoulli/Fuse/projects/fabric8/fabric8-installer/vagrant/openshift-atest/.vagrant/machines/default/virtualbox/private_key
 ```
+
+# Compile quickstarts app
+
+
+* Ope a terminal and change to quickstart fabric8 project
+* Check that you use maven 3.2.5 to do the build
+
+```
+mvn clean install -Papps -DskipTests=true
+```
+# Set the env variables required to access Kubernetes & OS
+
+```
+./scripts/set_kubenertes_env.sh
+```
+
+
+# Deploy the CDElivery Kube applications on OS
+
+
+
+# Deploy 
+ 
+```
+mvn clean install -Pcdelievry
+```
+
     
     
 # Delete the Fabric8 App
