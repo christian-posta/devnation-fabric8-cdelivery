@@ -215,7 +215,18 @@ cd /Users/chmoulli/Temp/test-devnation
      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                     Dload  Upload   Total   Spent    Left  Speed
    100  4360  100  4360    0     0    867      0  0:00:05  0:00:05 --:--:--  304k 
-```    
+```   
+
+# Commit a change
+
+# Start the pipeline
+
+# Create namespace
+
+```   
+oc create -f scripts/namespace.json 
+```   
+  
      
 # Delete the Fabric8 App
 
