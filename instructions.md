@@ -191,7 +191,7 @@ chrome http://fabric8.vagrant.local
 ```  
 # Add Gerrit Review hook to the project
       
-  Run the script 
+  Run the script and pass as parameter the directory name of the project to be created locally on your machine and the gerrit git repository (should be by example : devnation)
 ```  
   /scripts/review.sh devnnation      
 ```    
