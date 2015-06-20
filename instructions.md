@@ -96,7 +96,7 @@ mvn install -Pconsole -Pcdelivery
 oc get pods
 oc get services
 
- oc get svc
+oc get svc
 NAME              LABELS                                     SELECTOR                                   IP(S)            PORT(S)
 docker-registry   docker-registry=default                    docker-registry=default                    172.30.136.53    5000/TCP
 elasticsearch     component=elasticsearch,provider=fabric8   component=elasticsearch,provider=fabric8   172.30.74.191    9200/TCP
@@ -199,7 +199,22 @@ chrome http://fabric8.vagrant.local
       
   Run the script and pass as parameter the directory name of the project to be created locally on your machine and the gerrit git repository (should be by example : devnation)
 ```  
-  /scripts/review.sh devnnation      
+  /scripts/review.sh devnation devnation 
+  
+cd /Users/chmoulli/Temp/test-devnation
+ /Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabric8-cdelivery/scripts/review.sh devnation devnation
+   Counting objects: 24, done.
+   Delta compression using up to 8 threads.
+   Compressing objects: 100% (16/16), done.
+   Writing objects: 100% (24/24), 6.11 KiB | 0 bytes/s, done.
+   Total 24 (delta 2), reused 0 (delta 0)
+   remote: Resolving deltas: 100% (2/2)
+   remote: Processing changes: refs: 1, done
+   To http://admin@gerrit.vagrant.local/devnation
+    * [new branch]      master -> master
+     % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                    Dload  Upload   Total   Spent    Left  Speed
+   100  4360  100  4360    0     0    867      0  0:00:05  0:00:05 --:--:--  304k 
 ```    
      
 # Delete the Fabric8 App
