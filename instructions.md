@@ -62,12 +62,16 @@ cd /Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabric
 ./scripts/copy-keys-vagrant.sh /Users/chmoulli/Fuse/projects/fabric8/fabric8-installer/vagrant/openshift-atest/.vagrant/machines/default/virtualbox/private_key
 ```
 
-# Compile quickstarts app
+# Compile Kube Jenkins & Gerrit applications
 
-
-* Ope a terminal and change to quickstart fabric8 project
+* Open a terminal and move to the directory containing this project cloned (https://github.com/fabric8io/quickstarts)
 * Check that you use maven 3.2.5 to do the build
-* Depending of the version used by the project, build accordingly the project (2.2.0, ...)
+* Move to the apps/jenkins directory and execute this maven command to build jenkins with our properties
+
+```
+mvn install -Dfabric8.templateParametersFile=/Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabric8-cdelivery/local-scripts/jenkins-params.properties
+```
+* If you would like to compile the kube apps of a project, execute this command at the root of the project
 
 ```
 mvn clean install -Papps -DskipTests=true
@@ -80,9 +84,11 @@ mvn clean install -Papps -DskipTests=true
 
 # Deploy the group of the cdelivery Kube applications on OSv3
 
+Now that the Kube applications for that demo are compiled and the Openshift/Docker virtual machine is running, we can deploy the application
+part of that demo
  
 ```
-vn clean install -Pcdelievry
+mvn install -Pconsole -Pcdelivery
 ```
 
 * Control that the Fabric8 Pods & Services have been created
