@@ -67,6 +67,7 @@ cd /Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabric
 
 * Ope a terminal and change to quickstart fabric8 project
 * Check that you use maven 3.2.5 to do the build
+* Depending of the version used by the project, build accordingly the project (2.2.0, ...)
 
 ```
 mvn clean install -Papps -DskipTests=true
@@ -77,7 +78,7 @@ mvn clean install -Papps -DskipTests=true
 ./scripts/set_kubenertes_env.sh
 ```
 
-# Deploy the CDelivery Kube applications on OS
+# Deploy the group of the cdelivery Kube applications on OSv3
 
  
 ```
@@ -89,20 +90,23 @@ vn clean install -Pcdelievry
 oc get pods
 oc get services
 
-oc get svc
+ oc get svc
 NAME              LABELS                                     SELECTOR                                   IP(S)            PORT(S)
 docker-registry   docker-registry=default                    docker-registry=default                    172.30.136.53    5000/TCP
-elasticsearch     component=elasticsearch,provider=fabric8   component=elasticsearch,provider=fabric8   172.30.124.123   9200/TCP
-fabric8           component=console,provider=fabric8         component=console,provider=fabric8         172.30.235.97    80/TCP
-fabric8-forge     component=fabric8Forge,provider=fabric8    component=fabric8Forge,provider=fabric8    172.30.236.9     80/TCP
-gogs              component=gogs,provider=fabric8            component=gogs,provider=fabric8            172.30.73.26     80/TCP
-gogs-ssh          component=gogs,provider=fabric8            component=gogs,provider=fabric8            172.30.215.233   22/TCP
-jenkins           component=jenkins,provider=fabric8         component=jenkins,provider=fabric8         172.30.1.117     80/TCP
-kibana            component=kibana,provider=fabric8          component=kibana,provider=fabric8          172.30.25.211    80/TCP
+elasticsearch     component=elasticsearch,provider=fabric8   component=elasticsearch,provider=fabric8   172.30.74.191    9200/TCP
+fabric8           component=console,provider=fabric8         component=console,provider=fabric8         172.30.218.102   80/TCP
+fabric8-forge     component=fabric8Forge,provider=fabric8    component=fabric8Forge,provider=fabric8    172.30.127.171   80/TCP
+gerrit            component=gerrit,provider=fabric8          component=gerrit,provider=fabric8          172.30.153.170   80/TCP
+gerrit-ssh        component=gerrit,provider=fabric8          component=gerrit,provider=fabric8          172.30.128.61    29418/TCP
+gogs              component=gogs,provider=fabric8            component=gogs,provider=fabric8            172.30.209.199   80/TCP
+gogs-ssh          component=gogs,provider=fabric8            component=gogs,provider=fabric8            172.30.255.164   22/TCP
+jenkins           component=jenkins,provider=fabric8         component=jenkins,provider=fabric8         172.30.119.13    80/TCP
+kibana            component=kibana,provider=fabric8          component=kibana,provider=fabric8          172.30.16.216    80/TCP
 kubernetes        component=apiserver,provider=kubernetes    <none>                                     172.30.0.2       443/TCP
 kubernetes-ro     component=apiserver,provider=kubernetes    <none>                                     172.30.0.1       80/TCP
-nexus             component=nexus,provider=fabric8           component=nexus,provider=fabric8           172.30.67.68     80/TCP
+nexus             component=nexus,provider=fabric8           component=nexus,provider=fabric8           172.30.126.22    80/TCP
 router            router=router                              router=router                              172.30.165.182   80/TCP
+
 
 oc get pods
 NAME                      READY     REASON    RESTARTS   AGE
@@ -116,6 +120,12 @@ jenkins-29e5i             1/1       Running   0          22m
 kibana-zfgyf              1/1       Running   0          22m
 nexus-1fsnz               1/1       Running   0          22m
 router-1-9us2r            1/1       Running   0          44m
+```
+
+* If the gerrit service is not there, then check that its json file contains the service. IF this is not the case, then rebuild it
+
+```
+mvn clean fabric8:json install
 ```
 
 * As it seems that the routes are not created by default, we have to recreate them
@@ -139,20 +149,53 @@ jenkins                 jenkins.vagrant.local                     jenkins
 kibana                  kibana.vagrant.local                      kibana            
 nexus                   nexus.vagrant.local                       nexus             
 router                  router.vagrant.local                      router 
-```    
+```   
 
 * We can verify now that nexus, gerrit, gogs & jenkins servers are running.
   So open a web browser with these addresses
   
 ```
-chrome fabric8.vagrant.local 
-chrome gogs.vagrant.local 
-chrome jenkins.vagrant.local
-chrome nexus.vagrant.local
-chrome 
+chrome http://gogs.vagrant.local 
+chrome http://jenkins.vagrant.local
+chrome http://nexus.vagrant.local
+chrome http://gerrit.vagrant.local
+chrome http://fabric8.vagrant.local 
 ```  
+# Create a CD/CI project
     
-    
+* Open the Fabric8 Web console and select the "Projects" tab
+
+  add image 
+  
+* From this view, click on the button "create project", a new screen will be displayed where
+  you can encode the name of the project (= name of the git repo, jenkins dsl pipeline, ...), the package name & version to be used
+  Remark : The build system can't be changed for the moment and is maven like the type "From Archetype catalog" 
+  
+  add image 
+  
+* Click on execute and within the next screen, you will be able to select from the maven catalog the archerype to be used "io.fabric8.archetypes:java-camel-cdi-archetype:2.2.0"
+  using the catalog of "fabric8". Click on execute to request the creation of the seed, jobs & git repos
+  
+  add image   
+  
+* Review what has been created in jenkins, gogs, gerrit & fabric8
+  
+  add image 
+  add image 
+  add image 
+  
+# Clone the project in a terminal to make a change & start a review process
+```    
+   git clone http://gogs.vagrant.local/gogsadmin/devnation.git
+   cd devnation
+```  
+# Add Gerrit Review hook to the project
+      
+  Run the script 
+```  
+  /scripts/review.sh devnnation      
+```    
+     
 # Delete the Fabric8 App
 
 ```
