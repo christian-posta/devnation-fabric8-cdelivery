@@ -1,0 +1,10 @@
+{
+  "kind": "Namespace",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "qa-test",
+    "labels": {
+      "name": "qa-test"
+    }
+  }
+}
