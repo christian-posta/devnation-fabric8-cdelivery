@@ -122,39 +122,35 @@
   </build>
 
 
-  <dependencies>
-    <!-- Base Hawtio/Fabric8 Console-->
-    <dependency>
-      <groupId>io.fabric8.apps</groupId>
-      <artifactId>base</artifactId>
-      <version>${fabric8.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-
-    <!-- Logging / Elastic search-->
-    <dependency>
-      <groupId>io.fabric8.apps</groupId>
-      <artifactId>logging</artifactId>
-      <version>${fabric8.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-      <exclusions>
-        <exclusion>
-          <groupId>io.fabric8.apps</groupId>
-          <artifactId>base</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <dependency>
-      <groupId>io.fabric8</groupId>
-      <artifactId>gitrepo-resteasy</artifactId>
-      <version>${fabric8.version}</version>
-    </dependency>
-  </dependencies>
-
   <profiles>
+	<profile>
+		<id>console</id>
+		<dependencies>
+			<!-- Base Hawtio/Fabric8 Console-->
+		    <dependency>
+		      <groupId>io.fabric8.apps</groupId>
+		      <artifactId>base</artifactId>
+		      <version>${fabric8.version}</version>
+		      <classifier>kubernetes</classifier>
+		      <type>json</type>
+		    </dependency>
+
+		    <!-- Logging / Elastic search-->
+		    <dependency>
+		      <groupId>io.fabric8.apps</groupId>
+		      <artifactId>logging</artifactId>
+		      <version>${fabric8.version}</version>
+		      <classifier>kubernetes</classifier>
+		      <type>json</type>
+		      <exclusions>
+		        <exclusion>
+		          <groupId>io.fabric8.apps</groupId>
+		          <artifactId>base</artifactId>
+		        </exclusion>
+		      </exclusions>
+		    </dependency>
+		</dependencies>
+	</profile>
     <profile>
       <id>cd-social</id>
       <dependencies>
@@ -218,8 +214,9 @@
         <dependency>
           <groupId>io.fabric8.jube.images.fabric8</groupId>
           <artifactId>jenkins</artifactId>
-          <version>${fabric8.version}</version>
-          <classifier>kubernetes</classifier>
+          <!--version>${fabric8.version}</version>
+      --> <version>2.3-SNAPSHOT</version>
+           <classifier>kubernetes</classifier>
           <type>json</type>
         </dependency>
         <!-- project wizard -->
