@@ -197,23 +197,33 @@ Git repo created into Gogs
 Git repo created in Gerrit Review Application
 ![Alt text](images/gerrit-4.png)
 
+Jenkins jobs for the project have been created (it, dev, deploy)
+![Alt text](images/jenkins-1a.png)
+![Alt text](images/jenkins-1b.png)
+
 Fabric8 CD/CI Pipeline created from the project
 ![Alt text](images/jenkins-2.png)
 
   
-# Clone the project in a terminal to make a change & start a review process
+# Clone the Git Gogs repo using a git command issued ina terminal to make a change & start a review process
 ```    
    git clone http://gogs.vagrant.local/gogsadmin/devnation.git
-   cd devnation
+   Cloning into 'devnation'...
+   remote: Counting objects: 24, done.
+   remote: Compressing objects: 100% (16/16), done.
+   remote: Total 24 (delta 2), reused 0 (delta 0)
+   Unpacking objects: 100% (24/24), done.
+   Checking connectivity... done.
 ```  
 # Add Gerrit Review hook to the project
-      
+  In order to use the git review branch created within the gerrit git repo, we will add the branch, modify the git hook message in order to 
+  generate a unique commit-id message.
+  
   Run the script and pass as parameter the directory name of the project to be created locally on your machine and the gerrit git repository (should be by example : devnation)
 ```  
   /scripts/review.sh devnation devnation 
   
-cd /Users/chmoulli/Temp/test-devnation
- /Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabric8-cdelivery/scripts/review.sh devnation devnation
+   /path/to/the/script/scripts/review.sh devnation devnation
    Counting objects: 24, done.
    Delta compression using up to 8 threads.
    Compressing objects: 100% (16/16), done.
@@ -225,7 +235,7 @@ cd /Users/chmoulli/Temp/test-devnation
     * [new branch]      master -> master
      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                     Dload  Upload   Total   Spent    Left  Speed
-   100  4360  100  4360    0     0    867      0  0:00:05  0:00:05 --:--:--  304k 
+   100  4360  100  4360    0     0    867      0  0:00:05  0:00:05 --:--:--  304k
 ```   
 
 # Commit a change
