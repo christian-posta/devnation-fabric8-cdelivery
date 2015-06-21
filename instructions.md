@@ -286,10 +286,13 @@ Return to the jenkins web server and start the pipeline of the project. After a 
 jobs have succeeded.
 
 ![Alt text](images/jenkins-2.png)
-![Alt text](images/jenkins-2.png)
-![Alt text](images/jenkins-2.png)
+![Alt text](images/jenkins-3.png)
+![Alt text](images/jenkins-5.png)
+![Alt text](images/jenkins-6.png)
 
 When the project has been compiled, you will be able to retrieve the code within the Nexus repo
+
+
 
 And when the Docker image of the project has been created, Fabric8 will deploy it on Openshift and you will be able to access the Apache
 Camel route deployed
