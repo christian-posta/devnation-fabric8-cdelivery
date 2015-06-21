@@ -54,6 +54,14 @@ sudo chown -R vagrant /home/gerrit/ssh-keys/
 ```    
 * You can exit from the vagrant machine
 
+# Create the development namespace using openshift client 
+
+We will use this namespace for the application created during the CD/CI scenarion
+
+```   
+oc create -f local-scripts/dev-namespace.json 
+```
+
 # Copy ssh keys
 
 Pass as parameter the location of the vagrant private key and run the bash script `/scripts/copy-keys-vagrant.sh`
@@ -235,16 +243,56 @@ Fabric8 CD/CI Pipeline created from the project
     * [new branch]      master -> master
      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                     Dload  Upload   Total   Spent    Left  Speed
-   100  4360  100  4360    0     0    867      0  0:00:05  0:00:05 --:--:--  304k
+   100  4360  100  4360    0     0    867      0  0:00:05  0:00:05 -:--:--  304k
 ```   
 
 # Commit a change
 
+Within the terminal where you have cloned the gogs repo, edit the file README.md and change the text. Next commit it and push the result to
+origin branch
+
+```
+git commit -m "First commit" -a
+[master d53d106] First commit
+ 1 file changed, 2 insertions(+)
+dabou:~/Temp/test-devnation/devnation$ git push review
+Counting objects: 3, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 399 bytes | 0 bytes/s, done.
+Total 3 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1)
+remote: Processing changes: new: 1, refs: 1, done
+remote:
+remote: New Changes:
+remote:   http://localhost:8080/1 First commit
+remote:
+```
+
+# Review the change and accept it within Gerrit
+
+![Alt text](images/gerrit-1.png)
+![Alt text](images/gerrit-2.png)
+![Alt text](images/gerrit-3.png)
+![Alt text](images/gerrit-4.png)
+
+# Check that the modification has been replicated with Gogs
+
+![Alt text](images/gogs-review.png)
+
 # Start the pipeline
 
-# Create namespace
+Return to the jenkins web server and start the pipeline of the project. After a few moments, you will see that the different
+jobs have succeeded.
 
-```   
-oc create -f local-scripts/dev-namespace.json 
-```
+![Alt text](images/jenkins-2.png)
+![Alt text](images/jenkins-2.png)
+![Alt text](images/jenkins-2.png)
+
+When the project has been compiled, you will be able to retrieve the code within the Nexus repo
+
+And when the Docker image of the project has been created, Fabric8 will deploy it on Openshift and you will be able to access the Apache
+Camel route deployed
+
+
 
