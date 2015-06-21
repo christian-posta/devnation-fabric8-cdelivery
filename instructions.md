@@ -44,6 +44,7 @@ while optional for the others
 vagrant ssh
 ```
 * Next run these instructions to create directories 
+
 ```
 sudo mkdir -p /home/gerrit/site
 sudo mkdir -p /home/gerrit/admin-ssh-key/
@@ -55,7 +56,7 @@ sudo chown -R vagrant /home/gerrit/ssh-keys/
 
 # Copy ssh keys
 
-Pass as parameter the location of the vagrant private key
+Pass as parameter the location of the vagrant private key and run the bash script `/scripts/copy-keys-vagrant.sh`
 
 ```
 cd /Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabric8-cdelivery
