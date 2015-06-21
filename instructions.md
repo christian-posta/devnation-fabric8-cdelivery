@@ -271,10 +271,10 @@ remote:
 
 # Review the change and accept it within Gerrit
 
-![Alt text](images/gerrit-1.png)
-![Alt text](images/gerrit-2.png)
-![Alt text](images/gerrit-3.png)
-![Alt text](images/gerrit-4.png)
+![Alt text](images/gerrit-review1.png)
+![Alt text](images/gerrit-review2.png)
+![Alt text](images/gerrit-review3.png)
+![Alt text](images/gerrit-review4.png)
 
 # Check that the modification has been replicated with Gogs
 
