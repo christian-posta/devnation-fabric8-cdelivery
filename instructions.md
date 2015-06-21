@@ -184,12 +184,22 @@ chrome http://fabric8.vagrant.local
   using the catalog of "fabric8". Click on execute to request the creation of the seed, jobs & git repos
   
 ![Alt text](images/fabric8-project-6.png)  
+
+* When the project is created, you will be redirected to this screen
+
+![Alt text](images/fabric8-project-7.png)  
   
 * Review what has been created in jenkins, gogs, gerrit & fabric8
   
-  add image 
-  add image 
-  add image 
+Git repo created into Gogs  
+![Alt text](images/fabric8-project-9.png)
+
+Git repo created in Gerrit Review Application
+![Alt text](images/gerrit-4.png)
+
+Fabric8 CD/CI Pipeline created from the project
+![Alt text](images/jenkins-2.png)
+
   
 # Clone the project in a terminal to make a change & start a review process
 ```    
