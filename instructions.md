@@ -177,13 +177,13 @@ chrome http://fabric8.vagrant.local
 * From this view, click on the button "create project", a new screen will be displayed where
   you can encode the name of the project (= name of the git repo, jenkins dsl pipeline, ...), the package name & version to be used
   Remark : The build system can't be changed for the moment and is maven like the type "From Archetype catalog" 
+
+![Alt text](images/fabric8-project-4.png)
   
-  add image 
-  
-* Click on execute and within the next screen, you will be able to select from the maven catalog the archerype to be used "io.fabric8.archetypes:java-camel-cdi-archetype:2.2.0"
+* Click on execute and within the next screen, you will be able to select from the maven catalog the archetype to be used "io.fabric8.archetypes:java-camel-cdi-archetype:2.2.0"
   using the catalog of "fabric8". Click on execute to request the creation of the seed, jobs & git repos
   
-  add image   
+![Alt text](images/fabric8-project-6.png)  
   
 * Review what has been created in jenkins, gogs, gerrit & fabric8
   
