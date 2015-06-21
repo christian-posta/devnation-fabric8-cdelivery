@@ -172,7 +172,7 @@ chrome http://fabric8.vagrant.local
     
 * Open the Fabric8 Web console and select the "Projects" tab
 
-  add image 
+![Alt text](images/fabric8-project-1.png)
   
 * From this view, click on the button "create project", a new screen will be displayed where
   you can encode the name of the project (= name of the git repo, jenkins dsl pipeline, ...), the package name & version to be used
