@@ -290,12 +290,18 @@ jobs have succeeded.
 ![Alt text](images/jenkins-5.png)
 ![Alt text](images/jenkins-6.png)
 
-When the project has been compiled, you will be able to retrieve the code within the Nexus repo
+When the job devnation-ci is finished and the project has been compiled, then you will be able to retrieve the code within the Nexus repo
 
-
+![Alt text](images/nexus.png)
 
 And when the Docker image of the project has been created, Fabric8 will deploy it on Openshift and you will be able to access the Apache
 Camel route deployed
 
+You can access to the application deployed using the Fabric8 Kubernetes view. Select the application and click on the button `start/open`
+
+![Alt text](images/fabric8-project-11.png)
+![Alt text](images/camel-docker.png)
+
+Enjoy your First Apache Camel Docker experience with Openshift Fabric8 technology & our CD/CI strategy !!
 
 
