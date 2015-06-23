@@ -88,7 +88,7 @@ mvn clean install -Papps -DskipTests=true
 # Set the env variables required to access Kubernetes & OS
 
 ```
-./scripts/set_kubenertes_env.sh
+./scripts/set_kubernetes_env.sh
 ```
 
 # Deploy the group of the cdelivery Kube applications on OSv3
