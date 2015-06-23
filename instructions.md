@@ -137,7 +137,7 @@ nexus-1fsnz               1/1       Running   0          22m
 router-1-9us2r            1/1       Running   0          44m
 ```
 
-* If the gerrit service is not there, then check that its json file contains the service. IF this is not the case, then rebuild it
+* If the gerrit service is not there, then check that its json file contains the service. If this is not the case, then rebuild it
 
 ```
 mvn clean fabric8:json install
