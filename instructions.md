@@ -56,7 +56,7 @@ sudo chown -R vagrant /home/gerrit/ssh-keys/
 
 # Create the development namespace using openshift client 
 
-We will use this namespace for the application created during the CD/CI scenarion
+We will use this namespace for the application created during the CD/CI scenario
 
 ```   
 oc create -f local-scripts/dev-namespace.json 
@@ -68,7 +68,7 @@ Pass as parameter the location of the vagrant private key and run the bash scrip
 
 ```
 cd /Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabric8-cdelivery
-./scripts/copy-keys-vagrant.sh /Users/chmoulli/Fuse/projects/fabric8/fabric8-installer/vagrant/openshift-atest/.vagrant/machines/default/virtualbox/private_key
+./scripts/copy-keys-vagrant.sh /Users/chmoulli/Fuse/projects/fabric8/fabric8-installer/vagrant/openshift-latest/.vagrant/machines/default/virtualbox/private_key
 ```
 
 # Compile Kube Jenkins & Gerrit applications
@@ -78,7 +78,8 @@ cd /Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabric
 * Move to the apps/jenkins directory and execute this maven command to build jenkins with our properties
 
 ```
-mvn install -Dfabric8.templateParametersFile=/Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabric8-cdelivery/local-scripts/jenkins-params.properties
+mvn compile fabric8:json -Dfabric8.templateParametersFile=/Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabric8-cdelivery/local-scripts/jenkins-params.properties
+mvn fabric8:apply -Dfabric8.templateParametersFile=/Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabric8-cdelivery/local-scripts/jenkins-params.properties
 ```
 * If you would like to compile the kube apps of a project, execute this command at the root of the project
 
