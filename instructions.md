@@ -271,7 +271,7 @@ chrome http://fabric8.vagrant.f8
 
 ![Alt text](images/fabric8-project-1.png)
 
-* Encode the login/password to access Gogs
+* Encode the login/password to access Gogs (gogsadmin/RedHat$1 & gogsadmin@fabric8.locaf8)
 
 ![Alt text](images/fabric8-git-login.png)
   
@@ -306,7 +306,7 @@ Fabric8 CD/CI Pipeline created from the project
 ![Alt text](images/jenkins-2.png)
 
   
-# Clone the Git Gogs repo using a git command issued ina terminal to make a change & start a review process
+# Clone the Git Gogs repo using a git command issued in a terminal to make a change & start a review process
 ```    
    git clone http://gogs.vagrant.f8/gogsadmin/devnation.git
    Cloning into 'devnation'...
