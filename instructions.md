@@ -31,11 +31,10 @@ Here is the description/presentation of the steps to be followed in order to set
 # Download and install Fabric8 Installer
 
 . Download the [Fabric8 Installer project](https://github.com/fabric8io/fabric8-installer/archive/master.zip)containing the Vagrant config file
-. Unzip the content
-. Open a Terminal and move to the directory of vagrant openshift 
-    cd fabric8-installer/vagrant/openshift
-    
-. Start Vagrant using this command
+* Unzip the content
+* Open a Terminal and move to the directory of vagrant openshift 
+* cd fabric8-installer/vagrant/openshift  
+* Start Vagrant using this command
 
 ```
 vagrant up
@@ -75,7 +74,7 @@ vagrant up
 ==> default: deploymentconfigs/docker-registry
 ==> default: services/docker-registry
 ``` 
-. Open your browser and access the Fabric8 console at this address +http://fabric8.vagrant.f8/+. The login/password to be used is +admin/admin+
+* Open your browser and access the Fabric8 console at this address +http://fabric8.vagrant.f8/+. The login/password to be used is +admin/admin+
     
 >> # Import SSH Keys
 >> 
@@ -99,8 +98,8 @@ vagrant up
 
 # Setup ENV vars to access Docker or Openshift daemons running within the Virtualbox machine    
   
-. Define for the HOST macosx the docker daemon which runs within the Vagrant VM Box and kubernetes env vars
-. Run these commands within a terminal 
+* Define for the HOST macosx the docker daemon which runs within the Vagrant VM Box and kubernetes env vars
+* Run these commands within a terminal 
 
 ```
 unset DOCKER_CERT_PATH
@@ -112,13 +111,13 @@ export KUBERNETES_DOMAIN=vagrant.f8
 export KUBERNETES_TRUST_CERT="true"
 ```
 
-. Or run this bash script
+* Or run this bash script
 
 ```
 ./scripts/set_kubernetes_env.sh
 ```
 
-. Authenticate the Openshift Client with the Openshift platform and select default as domain
+* Authenticate the Openshift Client with the Openshift platform and select default as domain
 
 ```
 oc project default
@@ -129,7 +128,7 @@ oc login -u admin -p admin https://172.28.128.4:8443
 
 We will use the `dev-namespace` to manage the demo bubernetes application created during the CD/CI scenario
 
-. Execute this command to setup the namespace
+* Execute this command to setup the namespace
 
 ```
 oc create -f local-scripts/dev-namespace.json 
@@ -169,8 +168,8 @@ oc create -f local-scripts/dev-namespace.json
 >> mvn install -Pconsole -Pcdelivery
 >> ```
 
-+
-. Download Fabric 8 Kubernetes templates
+
+## Download Fabric 8 Kubernetes templates
 
 ```
 cd target
@@ -178,7 +177,7 @@ curl -o fabric8.zip http://repo1.maven.org/maven2/io/fabric8/apps/distro/2.2.19/
 unzip fabric8.zip
 ```
 
-. Deploy the Fabric8 Continuous Delivery application
+## Deploy the Fabric8 Continuous Delivery application
 
 ```
 oc process -v DOMAIN='vagrant.f8' -f main/cdelivery-2.2.19.json  | oc create -f -
