@@ -186,7 +186,10 @@ oc process -v DOMAIN='vagrant.f8' -f main/cdelivery-2.2.19.json  | oc create -f 
 * NOTE: Don't worry about such messages as the elasticsearch, elasticsearch-cluster & kibana kube apps have alsready been deployed when we have started the Virtualbox
 
 
+## Control Deployment
+
 * Control that the Fabric8 Pods & Services have been created
+
 ```
 oc get pods
 oc get services
