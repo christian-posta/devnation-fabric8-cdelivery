@@ -2,104 +2,194 @@
 
 Here is the description/presentation of the steps to be followed in order to setup the environment and run the demo
 
-* Verify that the  `/etc/hosts` file contains a mapping btween the IP address of the VM and these hostnames
+* Install the Openshift Client on your MacosX machine (TODO)
 
-```
-172.28.128.4	fabric8.local gogs.local vagrant.local docker-registry.vagrant.local fabric8-master.vagrant.local fabric8.vagrant.local gogs.vagrant.local jenkins.vagrant.local kibana.vagrant.local nexus.vagrant.local router.vagrant.local gerrit-ssh.vagrant.local gerrit.vagrant.local gerrit.vagrant.local gerrit-http.vagrant.local sonarqube.vagrant.local letschat.vagrant.local orion.vagrant.local taiga.vagrant.local quickstart-camelservlet.vagrant.local quickstart-rest.vagrant.local
-```
+// * Verify that the `/etc/hosts` file contains a mapping between the IP address of the VM and these hostnames
+// 
+// ```
+// 172.28.128.4	fabric8.local gogs.local vagrant.local docker-registry.vagrant.local fabric8-master.vagrant.local fabric8.vagrant.local gogs.vagrant.local jenkins.vagrant.local kibana.vagrant.local nexus.vagrant.local router.vagrant.local gerrit-ssh.vagrant.local gerrit.vagrant.local gerrit.vagrant.local gerrit-http.vagrant.local sonarqube.vagrant.local letschat.vagrant.local orion.vagrant.local taiga.vagrant.local quickstart-camelservlet.vagrant.local quickstart-rest.vagrant.local
+// ```
+// 
+// * Add the routes used by the macos x machine to access the Pods/Docker containers
+// 
+// ```
+// sudo route -n delete 172.0.0.0/8
+// sudo route -n add 172.0.0.0/8  172.28.128.4
+// ```
+// 
+// # Clone fabric8-installer
+// 
+// Clone the Fabric8-installer project and move to the vagrant/openshift-latest directory. Checkout this id
+// as the latest commit (19/06/2015) is not working anymore 
+// 
+// ```
+// git clone https://github.com/fabric8io/fabric8-installer
+// git checkout 09d2005
+// cd fabric8-installer/vagrant/openshift-latest
+// ```
 
-* Add the routes used by the macos x machine to access the Pods/Docker containers
+# Download and install Fabric8 Installer
 
-```
-sudo route -n delete 172.0.0.0/8
-sudo route -n add 172.0.0.0/8  172.28.128.4
-```
-
-* Install the Openshift Client on your MacosX machine 
-
-# Clone fabric8-installer
-
-Clone the Fabric8-installer project and move to the vagrant/openshift-latest directory. Checkout this id
-as the latest commit (19/06/2015) is not working anymore 
-
-```
-git clone https://github.com/fabric8io/fabric8-installer
-git checkout 09d2005
-cd fabric8-installer/vagrant/openshift-latest
-```
-
-# Create the Vagrant VM machine
-
-```
+. Download the [Fabric8 Installer project](https://github.com/fabric8io/fabric8-installer/archive/master.zip)containing the Vagrant config file
+. Unzip the content
+. Open a Terminal and move to the directory of vagrant openshift 
+    cd fabric8-installer/vagrant/openshift
+    
+. Start Vagrant using this command
++
+----
 vagrant up
-```
+----
++
+[NOTE]
+====
+When the VirtualBox machine has been started and created successfully, you should be able to see this message within the console
 
-# Import SSH Keys
+----
+==> default: --------------------------------------------------------------
+==> default: Fabric8 pod is running! Who-hoo!
+==> default: --------------------------------------------------------------
+==> default:
+==> default: Now open the fabric8 console at:
+==> default:
+==> default:     http://fabric8.vagrant.f8/
+==> default:
+==> default: When you first open your browser Chrome will say:
+==> default:
+==> default:    Your connection is not private
+==> default:
+==> default: * Don't panic!
+==> default: * Click on the small 'Advanced' link on the bottom left
+==> default: * Now click on the link that says 'Proceed to fabric8.vagrant.f8 (unsafe)' bottom left
+==> default: * Now the browser should redirect to the login page. Enter admin/admin
+==> default: * You should now be in the main fabric8 console. That was easy eh! :)
+==> default: * Make sure you start off in the 'default' namespace.
+==> default:
+==> default: To install more applications click the Run... button on the Apps tab.
+==> default:
+==> default: We love feedback: http://fabric8.io/community/
+==> default: Have fun!
+==> default:
+==> default: Now open the fabric8 console at:
+==> default:
+==> default:     http://fabric8.vagrant.f8/
+==> default:
+==> default: --------------------------------------------------------------
+==> default: deploymentconfigs/docker-registry
+==> default: services/docker-registry
+----
+====
++
+. Open your browser and access the Fabric8 console at this address +http://fabric8.vagrant.f8/+. The login/password to be used is +admin/admin+
+    
+// # Import SSH Keys
+// 
+// In order to use gerrit, we have to import the ssh-keys of the admin and jenkins/gogs/sonar users. The private/public keys of the admin user are mandatory
+// while optional for the others
+// 
+// * First ssh to the vagrant machine
+// ```
+// vagrant ssh
+// ```
+// * Next run these instructions to create directories 
+// 
+// ```
+// sudo mkdir -p /home/gerrit/site
+// sudo mkdir -p /home/gerrit/admin-ssh-key/
+// sudo chown -R vagrant /home/gerrit/
+// mkdir -p /home/gerrit/ssh-keys/
+// sudo chown -R vagrant /home/gerrit/ssh-keys/
+// ```    
+// * You can exit from the vagrant machine
 
-In order to use gerrit, we have to import the ssh-keys of the admin and jenkins/gogs/sonar users. The private/public keys of the admin user are mandatory
-while optional for the others
-
-* First ssh to the vagrant machine
-```
-vagrant ssh
-```
-* Next run these instructions to create directories 
-
-```
-sudo mkdir -p /home/gerrit/site
-sudo mkdir -p /home/gerrit/admin-ssh-key/
-sudo chown -R vagrant /home/gerrit/
-mkdir -p /home/gerrit/ssh-keys/
-sudo chown -R vagrant /home/gerrit/ssh-keys/
-```    
-* You can exit from the vagrant machine
+# Setup ENV vars to access Docker or Openshift daemons running within the Virtualbox machine    
+  
+. Define for the HOST macosx the docker daemon which runs within the Vagrant VM Box and kubernetes env vars
+. Run these commands within a terminal 
++
+----
+unset DOCKER_CERT_PATH
+unset DOCKER_TLS_VERIFY
+export DOCKER_HOST=tcp://vagrant.f8:2375
+export KUBERNETES_NAMESPACE=default
+export KUBERNETES_MASTER=https://vagrant.f8:8443
+export KUBERNETES_DOMAIN=vagrant.f8
+export KUBERNETES_TRUST_CERT="true"
+----
+. Or run this bash script
++
+----
+./scripts/set_kubernetes_env.sh
+----
++
+. Authenticate the Openshift Client with the Openshift platform and select default as domain
++
+----
+oc project default
+oc login -u admin -p admin https://172.28.128.4:8443
+----
 
 # Create the development namespace using openshift client 
 
-We will use this namespace for the application created during the CD/CI scenario
+We will use the `dev-namespace` to manage the demo bubernetes application created during the CD/CI scenario
 
-```   
+. Execute this command to setup the namespace
++
+----
 oc create -f local-scripts/dev-namespace.json 
-```
+----
 
-# Copy ssh keys
+// # Copy ssh keys
+// 
+// Pass as parameter the location of the vagrant private key and run the bash script `/scripts/copy-keys-vagrant.sh`
+// 
+// ```
+// cd /Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabric8-cdelivery
+// ./scripts/copy-keys-vagrant.sh /Users/chmoulli/Fuse/projects/fabric8/fabric8-installer/vagrant/openshift-latest/.vagrant/machines/default/virtualbox/private_key
+// ```
 
-Pass as parameter the location of the vagrant private key and run the bash script `/scripts/copy-keys-vagrant.sh`
-
-```
-cd /Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabric8-cdelivery
-./scripts/copy-keys-vagrant.sh /Users/chmoulli/Fuse/projects/fabric8/fabric8-installer/vagrant/openshift-latest/.vagrant/machines/default/virtualbox/private_key
-```
-
-# Compile Kube Jenkins & Gerrit applications
-
-* Open a terminal and move to the directory containing this project cloned (https://github.com/fabric8io/quickstarts)
-* Check that you use maven 3.2.5 to do the build
-* Move to the apps/jenkins directory and execute this maven command to build jenkins with our properties
-
-```
-mvn compile fabric8:json -Dfabric8.templateParametersFile=/Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabric8-cdelivery/local-scripts/jenkins-params.properties
-mvn fabric8:apply -Dfabric8.templateParametersFile=/Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabric8-cdelivery/local-scripts/jenkins-params.properties
-```
-* If you would like to compile the kube apps of a project, execute this command at the root of the project
-
-```
-mvn clean install -Papps -DskipTests=true
-```
-# Set the env variables required to access Kubernetes & OS
-
-```
-./scripts/set_kubernetes_env.sh
-```
+// # Compile Kube Jenkins & Gerrit applications
+// 
+// * Open a terminal and move to the directory containing this project cloned (https://github.com/fabric8io/quickstarts)
+// * Check that you use maven 3.2.5 to do the build
+// * Move to the apps/jenkins directory and execute this maven command to build jenkins with our properties
+// 
+// ```
+// mvn compile fabric8:json -Dfabric8.templateParametersFile=/Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabric8-cdelivery/local-scripts/jenkins-params.properties
+// mvn fabric8:apply -Dfabric8.templateParametersFile=/Users/chmoulli/MyProjects/MyConferences/devnation-2015/demo/devnation-fabric8-cdelivery/local-scripts/jenkins-params.properties
+// ```
+// * If you would like to compile the kube apps of a project, execute this command at the root of the project
+// 
+// ```
+// mvn clean install -Papps -DskipTests=true
+// ```
 
 # Deploy the group of the cdelivery Kube applications on OSv3
 
-Now that the Kube applications for that demo are compiled and the Openshift/Docker virtual machine is running, we can deploy the application
-part of that demo
- 
-```
-mvn install -Pconsole -Pcdelivery
-```
+// Now that the Kube applications for that demo are compiled and the Openshift/Docker virtual machine is running, we can deploy the application
+// part of that demo
+//  
+// ```
+// mvn install -Pconsole -Pcdelivery
+// ```
+
++
+. Download Fabric 8 Kubernetes templates
++
+----
+cd target
+curl -o fabric8.zip http://repo1.maven.org/maven2/io/fabric8/apps/distro/2.2.19/distro-2.2.19-templates.zip
+unzip fabric8.zip
+----
+
+. Deploy the Fabric8 Continuous Delivery application
++
+----
+oc process -v DOMAIN='vagrant.f8' -f main/cdelivery-2.2.19.json  | oc create -f -
+----
++
+NOTE: Don't worry about such messages as the elasticsearch, elasticsearch-cluster & kibana kube apps have alsready been deployed when we have started the Virtualbox
+
 
 * Control that the Fabric8 Pods & Services have been created
 ```
