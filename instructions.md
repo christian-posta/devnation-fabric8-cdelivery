@@ -259,17 +259,21 @@ router                  router.vagrant.local                      router
   So open a web browser with these addresses
   
 ```
-chrome http://gogs.vagrant.local 
-chrome http://jenkins.vagrant.local
-chrome http://nexus.vagrant.local
-chrome http://gerrit.vagrant.local
-chrome http://fabric8.vagrant.local 
+chrome http://gogs.vagrant.f8 
+chrome http://jenkins.vagrant.f8
+chrome http://nexus.vagrant.f8
+chrome http://gerrit.vagrant.f8
+chrome http://fabric8.vagrant.f8 
 ```  
 # Create a CD/CI project
     
 * Open the Fabric8 Web console and select the "Projects" tab
 
 ![Alt text](images/fabric8-project-1.png)
+
+* Encode the login/password to access Gogs
+
+![Alt text](images/fabric8-git-login.png)
   
 * From this view, click on the button "create project", a new screen will be displayed where
   you can encode the name of the project (= name of the git repo, jenkins dsl pipeline, ...), the package name & version to be used
@@ -304,7 +308,7 @@ Fabric8 CD/CI Pipeline created from the project
   
 # Clone the Git Gogs repo using a git command issued ina terminal to make a change & start a review process
 ```    
-   git clone http://gogs.vagrant.local/gogsadmin/devnation.git
+   git clone http://gogs.vagrant.f8/gogsadmin/devnation.git
    Cloning into 'devnation'...
    remote: Counting objects: 24, done.
    remote: Compressing objects: 100% (16/16), done.
@@ -328,7 +332,7 @@ Fabric8 CD/CI Pipeline created from the project
    Total 24 (delta 2), reused 0 (delta 0)
    remote: Resolving deltas: 100% (2/2)
    remote: Processing changes: refs: 1, done
-   To http://admin@gerrit.vagrant.local/devnation
+   To http://admin@gerrit.vagrant.f8/devnation
     * [new branch]      master -> master
      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                     Dload  Upload   Total   Spent    Left  Speed
